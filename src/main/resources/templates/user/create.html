@@ -109,9 +109,9 @@
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label>Select a Role</label>
-                                                    <select name="roleId" id="roleid" th:field="*{role}" class="custom-select" required>
+                                                    <select th:field="*{role}" class="custom-select" required>
                                                         <option th:value="  ''" th:text="Select"></option>
-                                                        <option th:each="role : ${roleList}"> </option>
+                                                        <option th:each="theRole : ${roles}" th:value="${theRole.id}" th:text="${theRole.description}"></option>
 
                                                     </select>
                                                 </div>
@@ -163,40 +163,14 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Mark</td>
-                                                <td>a@a.com</td>
-                                                <td>Male</td>
-                                                <td>555</td>
-                                                <td>Admin</td>
+                                            <tr th:each="user : ${users}">
+                                                <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+                                                <td th:text="${user.userName}"></td>
+                                                <td th:text="${user.gender}"></td>
+                                                <td th:text="${user.phone}"></td>
+                                                <td th:text="${user.role.getDescription()}"></td>
                                                 <td>Smith</td>
-                                                <td>
-                                                    <a href=""><button type="button" class="btn btn-warning btn-sm">Update</button> </a>
-                                                    <a href="" class="delete-row"><button type="button" class="btn btn-secondary btn-sm">Delete</button> </a>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>Mark</td>
-                                                <td>a@a.com</td>
-                                                <td>Male</td>
-                                                <td>555</td>
-                                                <td>Admin</td>
-                                                <td>Smith</td>
-                                                <td>
-                                                    <a href=""><button type="button" class="btn btn-warning btn-sm">Update</button> </a>
-                                                    <a href="" class="delete-row"><button type="button" class="btn btn-secondary btn-sm">Delete</button> </a>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>Mark</td>
-                                                <td>a@a.com</td>
-                                                <td>Male</td>
-                                                <td>555</td>
-                                                <td>Admin</td>
-                                                <td>Smith</td>
-                                                <td>
+                                                <td class="actions">
                                                     <a href=""><button type="button" class="btn btn-warning btn-sm">Update</button> </a>
                                                     <a href="" class="delete-row"><button type="button" class="btn btn-secondary btn-sm">Delete</button> </a>
                                                 </td>
