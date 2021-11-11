@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,7 +31,6 @@ public class ProjectController {
         model.addAttribute("managers", userService.findAll());
 
         return "/project/create";
-
     }
 
     @PostMapping("/create")
@@ -39,6 +39,14 @@ public class ProjectController {
         projectService.save(project);
 
         project.setProjectStatus(Status.OPEN);
+
+        return "redirect:/project/create";
+    }
+
+    @GetMapping("/delete/{projectCode}")
+    public String deleteProject(@PathVariable("projectCode") String projectCode){
+
+        projectService.deleteByID(projectCode);
 
         return "redirect:/project/create";
 
