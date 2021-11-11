@@ -1,6 +1,7 @@
 package com.cybertek.controller;
 
 import com.cybertek.dto.TaskDTO;
+import com.cybertek.enums.Status;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/task")
@@ -39,12 +42,27 @@ public class TaskController {
         return "/task/create";
     }
 
-    @PostMapping("/insert/{taskId}")
-    public String insertTask(@PathVariable("taskId") Long id){
+    @PostMapping("/create")
+    public String insertTask(TaskDTO task, Model model){
 
-        taskService.save(taskService.findByID(id));
+        task.setAssignedDate(LocalDate.now());
+
+        task.setTaskStatus(Status.OPEN);
+
+        taskService.save(task);
 
         return "redirect:/task/create";
+
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable("id") Long id){
+
+        taskService.deleteByID(id);
+
+        return "redirect:/task/create";
+
+
 
     }
 
