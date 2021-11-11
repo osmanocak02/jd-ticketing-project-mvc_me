@@ -2,11 +2,14 @@ package com.cybertek.controller;
 
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.service.ProjectService;
+import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,6 +22,9 @@ public class TaskController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TaskService taskService;
+
     @GetMapping("/create")
     public String createTask(Model model, TaskDTO task){
 
@@ -28,7 +34,18 @@ public class TaskController {
 
         model.addAttribute("employees", userService.findEmployees());
 
+        model.addAttribute("tasks", taskService.findAll());
+
         return "/task/create";
+    }
+
+    @PostMapping("/insert/{taskId}")
+    public String insertTask(@PathVariable("taskId") Long id){
+
+        taskService.save(taskService.findByID(id));
+
+        return "redirect:/task/create";
+
     }
 
 }
