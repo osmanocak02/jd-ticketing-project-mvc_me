@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/task")
@@ -49,6 +50,8 @@ public class TaskController {
 
         task.setTaskStatus(Status.OPEN);
 
+        task.setId(UUID.randomUUID().getMostSignificantBits());
+
         taskService.save(task);
 
         return "redirect:/task/create";
@@ -61,9 +64,6 @@ public class TaskController {
         taskService.deleteByID(id);
 
         return "redirect:/task/create";
-
-
-
     }
 
 }
