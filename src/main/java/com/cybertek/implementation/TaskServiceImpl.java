@@ -1,5 +1,6 @@
 package com.cybertek.implementation;
 
+import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,13 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO, Long> implement
 
     @Override
     public void update(TaskDTO object) {
+
+        TaskDTO foundTask = findByID(object.getId());
+
+        object.setAssignedDate(foundTask.getAssignedDate());
+
+        object.setTaskStatus(foundTask.getTaskStatus());
+
         super.update(object.getId(), object);
     }
 
